@@ -164,13 +164,16 @@ class horizon(
     notify  => Service[$::horizon::params::http_service]
   }
 
-  file_line { 'httpd_listen_on_bind_address_80':
-    path    => $::horizon::params::httpd_listen_config_file,
-    match   => '^Listen (.*):?80$',
-    line    => "Listen ${bind_address}:80",
-    require => Package['horizon'],
-    notify  => Service[$::horizon::params::http_service],
-  }
+  # This conflicts with the apache class and causes ports.conf to change
+  # every time the manifest is applied.
+  # TODO move all of this crazy to just use the apache module
+  # file_line { 'httpd_listen_on_bind_address_80':
+  #   path    => $::horizon::params::httpd_listen_config_file,
+  #   match   => '^Listen (.*):?80$',
+  #   line    => "Listen ${bind_address}:80",
+  #   require => Package['horizon'],
+  #   notify  => Service[$::horizon::params::http_service],
+  # }
 
   if $listen_ssl {
     include apache::mod::ssl
