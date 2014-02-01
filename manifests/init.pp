@@ -86,6 +86,10 @@
 #  [*compress_offline*]
 #    (optional) Boolean to enable offline compress of assets.
 #    Defaults to True
+#
+#  [*enable_load_balancer*]
+#    (optional) Boolean to enable configuring load balancers through the
+#    dashboard. Defaults to False
 
 class horizon(
   $secret_key,
@@ -113,7 +117,8 @@ class horizon(
   $horizon_ca              = undef,
   $help_url                = 'http://docs.openstack.org',
   $local_settings_template = 'horizon/local_settings.py.erb',
-  $compress_offline        = 'True'
+  $compress_offline        = 'True',
+  $enable_load_balancer    = 'False',
 ) {
 
   include horizon::params
